@@ -19,7 +19,7 @@ const TabNavigation = () => {
           borderColor : "none"
         },
         tabBarStyle: {
-          borderTopWidth: 0,
+          borderTopWidth: 1,
           elevation: 0,
           paddingBottom: 0,
           paddingTop: 0,
