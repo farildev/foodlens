@@ -1,43 +1,35 @@
-import {
-  useFonts,
-  DMSans_100Thin,
-  DMSans_200ExtraLight,
-  DMSans_300Light,
-  DMSans_400Regular,
-  DMSans_500Medium,
-  DMSans_600SemiBold,
-  DMSans_700Bold,
-  DMSans_800ExtraBold,
-  DMSans_900Black,
-} from "@expo-google-fonts/dm-sans";
-import { useState, useEffect } from "react";
-import * as SplashScreen from 'expo-splash-screen';
+import { useState, useEffect, useCallback } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
 
 SplashScreen.preventAutoHideAsync();
 
 const FontLoader = ({ children }) => {
-  let [fontsLoaded] = useFonts({
-    DMSans_100Thin,
-    DMSans_200ExtraLight,
-    DMSans_300Light,
-    DMSans_400Regular,
-    DMSans_500Medium,
-    DMSans_600SemiBold,
-    DMSans_700Bold,
-    DMSans_800ExtraBold,
-    DMSans_900Black,
-  });
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  const [isAppReady, setAppReady] = useState(false);
+  const loadFonts = useCallback(async () => {
+    try {
+      await Font.loadAsync({
+        "SFPro-Thin": require("../assets/fonts/SF-Pro-Display-Ultralight.otf"),
+        "SFPro-Light": require("../assets/fonts/SF-Pro-Display-Light.otf"),
+        "SFPro-Regular": require("../assets/fonts/SF-Pro-Display-Regular.otf"),
+        "SFPro-Medium": require("../assets/fonts/SF-Pro-Display-Medium.otf"),
+        "SFPro-Semibold": require("../assets/fonts/SF-Pro-Display-Semibold.otf"),
+        "SFPro-Bold": require("../assets/fonts/SF-Pro-Display-Bold.otf"),
+      });
+
+      setFontsLoaded(true);
+      await SplashScreen.hideAsync();
+    } catch (error) {
+      console.warn("Font yüklenirken hata oldu:", error);
+    }
+  }, []);
 
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-      setAppReady(true);
-    }
-  }, [fontsLoaded]);
+    loadFonts();
+  }, [loadFonts]);
 
-  if (!fontsLoaded || !isAppReady) {
+  if (!fontsLoaded) {
     return null;
   }
 
