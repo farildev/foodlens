@@ -4,7 +4,7 @@ const StackNavigation = () => {
   const { Navigator, Screen } = createNativeStackNavigator();
   return (
     <Navigator>
-      <Screen name="tabs" component={TabNavigation} />
+      <Screen name="tabs" options={{headerShown : false}} component={TabNavigation} />
     </Navigator>
   )
 }
