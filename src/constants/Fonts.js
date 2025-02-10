@@ -1,13 +1,10 @@
 const Fonts = {
-  '100Thin': 'DMSans_100Thin',
-  '200ExtraLight': 'DMSans_200ExtraLight',
-  '300Light': 'DMSans_300Light',
-  '400Regular': 'DMSans_400Regular',
-  '500Medium': 'DMSans_500Medium',
-  '600SemiBold': 'DMSans_600SemiBold',
-  '700Bold': 'DMSans_700Bold',
-  '800ExtraBold': 'DMSans_800ExtraBold',
-  '900Black': 'DMSans_900Black',
+  "200ExtraLight": "SFPro-Ultralight",
+  "300Light": "SFPro-Light",
+  "400Regular": "SFPro-Regular",
+  "500Medium": "SFPro-Medium",
+  "600SemiBold": "SFPro-Semibold",
+  "700Bold": "SFPro-Bold",
 };
 
 export default Fonts;
