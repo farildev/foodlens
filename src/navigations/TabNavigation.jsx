@@ -14,8 +14,15 @@ const TabNavigation = () => {
   return (
     <Navigator
       screenOptions={{
+        headerStyle: {
+          borderBottomWidth : 0,
+          borderColor : "none"
+        },
         tabBarStyle: {
           borderTopWidth: 0,
+          elevation: 0,
+          paddingBottom: 0,
+          paddingTop: 0,
         },
         tabBarLabelStyle: {
           fontFamily: Fonts["500Medium"],
