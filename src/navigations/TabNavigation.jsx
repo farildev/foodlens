@@ -6,23 +6,32 @@ import HomeIcon from "@/assets/icons/HomeIcon";
 import ScanIcon from "@/assets/icons/ScanIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
 import Fonts from "@/constants/Fonts";
+import { Colors } from "@/constants/Colors";
 
-const { Navigator, Screen, Group } = createBottomTabNavigator();
+const { Navigator, Screen } = createBottomTabNavigator();
 
 const TabNavigation = () => {
   return (
-    <Navigator>
+    <Navigator
+      screenOptions={{
+        tabBarStyle: {
+          borderTopWidth: 0,
+        },
+        tabBarLabelStyle: {
+          fontFamily: Fonts["500Medium"],
+          fontSize: 11,
+        },
+        tabBarActiveTintColor: Colors["main-green"],
+        tabBarInactiveTintColor: "#000",
+      }}
+    >
       <Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <HomeIcon />
+            <HomeIcon color={focused ? Colors["main-green"] : "#000"} />
           ),
-          tabBarLabelStyle : {
-            color : "#000",
-            fontFamily : Fonts['500Medium']
-          }
         }}
       />
       <Screen
@@ -30,12 +39,8 @@ const TabNavigation = () => {
         component={MealScanScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <ScanIcon />
+            <ScanIcon color={focused ? Colors["main-green"] : "#000"} />
           ),
-          tabBarLabelStyle : {
-            color : "#000",
-            fontFamily : Fonts['500Medium']
-          }
         }}
       />
       <Screen
@@ -43,16 +48,12 @@ const TabNavigation = () => {
         component={SettingsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <SettingsIcon />
+            <SettingsIcon color={focused ? Colors["main-green"] : "#000"} />
           ),
-          tabBarLabelStyle : {
-            color : "#000",
-            fontFamily : Fonts['500Medium']
-          }
         }}
       />
     </Navigator>
-  )
-}
+  );
+};
 
-export default TabNavigation
+export default TabNavigation;
