@@ -1,10 +1,22 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { useColorScheme } from "react-native";
 import { Colors } from "@/constants/Colors";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setMode } from "@/store/slices/themeSlice";
 import StackNavigation from "./StackNavigation";
+import { StatusBar } from "expo-status-bar";
 
 const RootNavigation = () => {
   const colorScheme = useColorScheme();
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.theme.mode);
+
+  useEffect(() => {
+    if (mode === 'system') {
+      dispatch(setMode(colorScheme === 'dark' ? 'dark' : 'light'));
+    }
+  }, [colorScheme, mode, dispatch]);
 
   const customDarkTheme = {
     ...DarkTheme,
@@ -34,9 +46,12 @@ const RootNavigation = () => {
     },
   };
 
+  const theme = mode === 'dark' ? customDarkTheme : customLightTheme;
+
   return (
-    <NavigationContainer theme={colorScheme === "dark" ? customDarkTheme : customLightTheme}>
+    <NavigationContainer theme={theme}>
       <StackNavigation />
+      <StatusBar style={mode === "dark" ? 'light' : 'dark'} />
     </NavigationContainer>
   )
 }
