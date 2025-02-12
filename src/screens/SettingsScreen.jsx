@@ -1,34 +1,29 @@
 import Fonts from "@/constants/Fonts";
 import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { StyleSheet, Text, View, Pressable, Button } from "react-native";
+import { StyleSheet, Text, View, Pressable, Button, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { Colors } from "@/constants/Colors";
 import { useCallback, useRef, useMemo } from "react";
-import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 const SettingsScreen = () => {
   const { colors } = useTheme();
   const bottomSheetModalRef = useRef(null);
+  const snapPoints = ['25%', '50%'];
+
+  const renderBackdrop = useCallback((props) => {
+    return <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />
+  })
 
   const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current.present();
+    bottomSheetModalRef.current.expand();
   }, []);
+
   const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
   return (
     <View style={styles.container}>
-      <BottomSheetModal
-        snapPoints={["50%"]}
-        ref={bottomSheetModalRef}
-        onChange={handleSheetChanges}
-        style={{ backgroundColor: 'red' }}
-        index={-1}
-        enablePanDownToClose={true} 
-      >
-        <BottomSheetView style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-        </BottomSheetView>
-      </BottomSheetModal>
+
       <View style={styles.listContainer}>
         <Pressable onPress={handlePresentModalPress} style={[styles.listStyle, { borderBottomColor: colors.border }]}>
           <View style={styles.listInnerContainer}>
@@ -70,6 +65,39 @@ const SettingsScreen = () => {
       <View style={styles.version}>
         <Text style={styles.versionText}>Version 1.0.0</Text>
       </View>
+      <BottomSheet
+        snapPoints={snapPoints}
+        ref={bottomSheetModalRef}
+        index={-1}
+        onChange={handleSheetChanges}
+        backdropComponent={renderBackdrop}
+        enableDynamicSizing={false}
+        enablePanDownToClose={true}
+      >
+        <View style={styles.sheetContainer}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.selectElement}>
+            <View style={styles.sheetElementContainer}>
+              <Feather name="moon" size={18} color="#000000" />
+              <Text style={styles.sheetElementText}>Dark Mode</Text>
+            </View>
+            <Feather name="check" size={18} color={Colors.mainColor} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.8} style={styles.selectElement}>
+            <View style={styles.sheetElementContainer}>
+              <Feather name="sun" size={18} color="#000000" />
+              <Text style={styles.sheetElementText}>Light Mode</Text>
+            </View>
+            <Feather name="check" size={18} color={Colors.mainColor} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.8} style={styles.selectElement}>
+            <View style={styles.sheetElementContainer}>
+              <Feather name="settings" size={18} color="#000000" />
+              <Text style={styles.sheetElementText}>System preferences</Text>
+            </View>
+            <Feather name="check" size={18} color={Colors.mainColor} />
+          </TouchableOpacity>
+        </View>
+      </BottomSheet>
     </View >
   );
 };
@@ -122,5 +150,25 @@ const styles = StyleSheet.create({
     color: "#666666",
     textAlign: 'center',
     fontFamily: Fonts["500Medium"]
+  },
+  sheetContainer: {
+    padding: 16,
+    flexDirection : 'column',
+    gap : 12
+  },
+  selectElement : {
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-between',
+    padding: 8
+  },
+  sheetElementContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  sheetElementText: {
+    fontFamily: Fonts["500Medium"],
+    fontSize: 16
   }
 });
