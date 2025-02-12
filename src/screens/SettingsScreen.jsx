@@ -1,103 +1,71 @@
 import Fonts from "@/constants/Fonts";
 import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { StyleSheet, Text, View, Pressable, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { Colors } from "@/constants/Colors";
-import { useCallback, useRef, useMemo } from "react";
-import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import { useCallback, useRef } from "react";
+import ThemeSheetModal from "@/components/modals/ThemeSheetModal";
+import ChangeLanguageSheet from "@/components/modals/ChangeLanguageSheet";
+
+
 const SettingsScreen = () => {
   const { colors } = useTheme();
-  const bottomSheetModalRef = useRef(null);
-  const snapPoints = ['25%', '50%'];
-
-  const renderBackdrop = useCallback((props) => {
-    return <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />
-  })
+  const themeSheetModalRef = useRef(null);
+  const languageSheetModalRef = useRef(null);
 
   const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current.expand();
+    themeSheetModalRef.current.expand();
   }, []);
 
-  const handleSheetChanges = useCallback((index) => {
-    console.log('handleSheetChanges', index);
+  const handleLanguageModalPress = useCallback(() => {
+    languageSheetModalRef.current.expand();
   }, []);
   return (
     <View style={styles.container}>
 
       <View style={styles.listContainer}>
-        <Pressable onPress={handlePresentModalPress} style={[styles.listStyle, { borderBottomColor: colors.border }]}>
+        <Pressable onPress={handlePresentModalPress} style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: Colors["main-green"] }]}>
               <Feather name="moon" size={18} color="#fff" />
             </View>
-            <Text style={styles.listText}>Theme mode</Text>
+            <Text style={[styles.listText, {color : colors.text}]}>Theme mode</Text>
           </View>
-          <Feather name="chevron-right" size={20} />
+          <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
-        <Pressable style={[styles.listStyle, { borderBottomColor: colors.border }]}>
+        <Pressable onPress={handleLanguageModalPress} style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: "#c50000" }]}>
               <Ionicons name="language-outline" size={18} color="#fff" />
             </View>
-            <Text style={styles.listText}>Change Language</Text>
+            <Text style={[styles.listText, {color : colors.text}]}>Change Language</Text>
           </View>
-          <Feather name="chevron-right" size={20} />
+          <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
-        <Pressable style={[styles.listStyle, { borderBottomColor: colors.border }]}>
+        <Pressable style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: "#ff7700" }]}>
               <MaterialIcons name="security" size={18} color="#fff" />
             </View>
-            <Text style={styles.listText}>Privacy Policy</Text>
+            <Text style={[styles.listText, {color : colors.text}]}>Privacy Policy</Text>
           </View>
-          <Feather name="chevron-right" size={20} />
+          <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
-        <Pressable style={[styles.listStyle, { borderBottomColor: colors.border }]}>
+        <Pressable style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: "#0088FF" }]}>
               <MaterialIcons name="question-mark" size={18} color="#fff" />
             </View>
-            <Text style={styles.listText}>F.A.Q</Text>
+            <Text style={[styles.listText, {color : colors.text}]}>F.A.Q</Text>
           </View>
-          <Feather name="chevron-right" size={20} />
+          <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
       </View>
       <View style={styles.version}>
         <Text style={styles.versionText}>Version 1.0.0</Text>
       </View>
-      <BottomSheet
-        snapPoints={snapPoints}
-        ref={bottomSheetModalRef}
-        index={-1}
-        onChange={handleSheetChanges}
-        backdropComponent={renderBackdrop}
-        enableDynamicSizing={false}
-        enablePanDownToClose={true}
-      >
-        <View style={styles.sheetContainer}>
-          <TouchableOpacity activeOpacity={0.8} style={styles.selectElement}>
-            <View style={styles.sheetElementContainer}>
-              <Feather name="moon" size={18} color="#000000" />
-              <Text style={styles.sheetElementText}>Dark Mode</Text>
-            </View>
-            <Feather name="check" size={18} color={Colors.mainColor} />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} style={styles.selectElement}>
-            <View style={styles.sheetElementContainer}>
-              <Feather name="sun" size={18} color="#000000" />
-              <Text style={styles.sheetElementText}>Light Mode</Text>
-            </View>
-            <Feather name="check" size={18} color={Colors.mainColor} />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} style={styles.selectElement}>
-            <View style={styles.sheetElementContainer}>
-              <Feather name="settings" size={18} color="#000000" />
-              <Text style={styles.sheetElementText}>System preferences</Text>
-            </View>
-            <Feather name="check" size={18} color={Colors.mainColor} />
-          </TouchableOpacity>
-        </View>
-      </BottomSheet>
+      <ThemeSheetModal ref={themeSheetModalRef} />
+      <ChangeLanguageSheet ref={languageSheetModalRef} />
     </View >
   );
 };
