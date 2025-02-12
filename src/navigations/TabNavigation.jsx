@@ -15,9 +15,11 @@ const TabNavigation = () => {
     <Navigator
       screenOptions={{
         headerStyle: {
-          borderBottomWidth : 0,
-          borderColor : "none"
+          borderBottomWidth: 0,
+          borderColor: "none"
         },
+        headerShadowVisible: false,
+        shadowOffset: { height: 0, width: 0 },
         tabBarStyle: {
           borderTopWidth: 1,
           elevation: 0,
@@ -29,7 +31,7 @@ const TabNavigation = () => {
           fontSize: 11,
         },
         tabBarActiveTintColor: Colors["main-green"],
-        tabBarInactiveTintColor: "#000",
+        tabBarInactiveTintColor: "#a6a6a6",
       }}
     >
       <Screen
@@ -37,7 +39,7 @@ const TabNavigation = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <HomeIcon color={focused ? Colors["main-green"] : "#000"} />
+            <HomeIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
           ),
         }}
       />
@@ -46,7 +48,7 @@ const TabNavigation = () => {
         component={MealScanScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <ScanIcon color={focused ? Colors["main-green"] : "#000"} />
+            <ScanIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
           ),
         }}
       />
@@ -55,7 +57,7 @@ const TabNavigation = () => {
         component={SettingsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <SettingsIcon color={focused ? Colors["main-green"] : "#000"} />
+            <SettingsIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
           ),
         }}
       />
