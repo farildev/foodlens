@@ -5,8 +5,10 @@ import SettingsScreen from "@/screens/SettingsScreen";
 import HomeIcon from "@/assets/icons/HomeIcon";
 import ScanIcon from "@/assets/icons/ScanIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
+import AssistantIcon from "@/assets/icons/AssistantIcon";
 import Fonts from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
+import AssistantScreen from "@/screens/AssistantScreen";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -44,11 +46,12 @@ const TabNavigation = () => {
         }}
       />
       <Screen
-        name="Scan"
-        component={MealScanScreen}
+        name="Assistant"
+        component={AssistantScreen}
         options={{
+          headerTitle : "AI Assistant",
           tabBarIcon: ({ focused }) => (
-            <ScanIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
+            <AssistantIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
           ),
         }}
       />
