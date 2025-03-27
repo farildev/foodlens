@@ -1,14 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "@/screens/HomeScreen";
-import MealScanScreen from "@/screens/MealScanScreen";
 import SettingsScreen from "@/screens/SettingsScreen";
 import HomeIcon from "@/assets/icons/HomeIcon";
-import ScanIcon from "@/assets/icons/ScanIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
 import AssistantIcon from "@/assets/icons/AssistantIcon";
+import FoodIcon from "@/assets/icons/FoodIcon";
 import Fonts from "@/constants/Fonts";
 import { Colors } from "@/constants/Colors";
-import AssistantScreen from "@/screens/AssistantScreen";
+import AssistantScreen from "@/screens/FoodScreen";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -40,18 +39,19 @@ const TabNavigation = () => {
         name="Home"
         component={HomeScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <HomeIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
           ),
         }}
       />
       <Screen
-        name="Assistant"
+        name="Foods"
         component={AssistantScreen}
         options={{
-          headerTitle : "AI Assistant",
+          headerTitle: "Foods",
           tabBarIcon: ({ focused }) => (
-            <AssistantIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
+            <FoodIcon color={focused ? Colors["main-green"] : "#a6a6a6"} />
           ),
         }}
       />
