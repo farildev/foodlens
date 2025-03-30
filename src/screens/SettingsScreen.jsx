@@ -1,17 +1,26 @@
 import Fonts from "@/constants/Fonts";
 import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, useNavigation } from "@react-navigation/native";
 import { Colors } from "@/constants/Colors";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import ThemeSheetModal from "@/components/modals/ThemeSheetModal";
 import ChangeLanguageSheet from "@/components/modals/ChangeLanguageSheet";
-
-
 const SettingsScreen = () => {
   const { colors } = useTheme();
+  const { navigate, setOptions } = useNavigation();
   const themeSheetModalRef = useRef(null);
   const languageSheetModalRef = useRef(null);
+
+  useEffect(() => {
+    setOptions({
+      headerLeft: () => (
+        <View style={{ paddingHorizontal: 12 }}>
+          <Feather name="arrow-left" color={'white'} size={20} />
+        </View>
+      )
+    })
+  }, [])
 
   const handlePresentModalPress = useCallback(() => {
     themeSheetModalRef.current.expand();
@@ -24,39 +33,48 @@ const SettingsScreen = () => {
     <View style={styles.container}>
 
       <View style={styles.listContainer}>
-        <Pressable onPress={handlePresentModalPress} style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
+        <Pressable onPress={() => navigate("FavoriteMeals")} style={[styles.listStyle, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border }]}>
+          <View style={styles.listInnerContainer}>
+            <View style={[styles.iconContainer, { backgroundColor: "red" }]}>
+              <Feather name="heart" size={18} color="#fff" />
+            </View>
+            <Text style={[styles.listText, { color: colors.text }]}>Favorite meals</Text>
+          </View>
+          <Feather name="chevron-right" color={colors.text} size={20} />
+        </Pressable>
+        <Pressable onPress={handlePresentModalPress} style={[styles.listStyle, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: Colors["main-green"] }]}>
               <Feather name="moon" size={18} color="#fff" />
             </View>
-            <Text style={[styles.listText, {color : colors.text}]}>Theme mode</Text>
+            <Text style={[styles.listText, { color: colors.text }]}>Theme mode</Text>
           </View>
           <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
-        <Pressable onPress={handleLanguageModalPress} style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
+        <Pressable onPress={handleLanguageModalPress} style={[styles.listStyle, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: "#c50000" }]}>
               <Ionicons name="language-outline" size={18} color="#fff" />
             </View>
-            <Text style={[styles.listText, {color : colors.text}]}>Change Language</Text>
+            <Text style={[styles.listText, { color: colors.text }]}>Change Language</Text>
           </View>
           <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
-        <Pressable style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
+        <Pressable style={[styles.listStyle, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: "#ff7700" }]}>
               <MaterialIcons name="security" size={18} color="#fff" />
             </View>
-            <Text style={[styles.listText, {color : colors.text}]}>Privacy Policy</Text>
+            <Text style={[styles.listText, { color: colors.text }]}>Privacy Policy</Text>
           </View>
           <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
-        <Pressable style={[styles.listStyle, { backgroundColor : colors.card, borderWidth : 1, borderColor : colors.border }]}>
+        <Pressable style={[styles.listStyle, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border }]}>
           <View style={styles.listInnerContainer}>
             <View style={[styles.iconContainer, { backgroundColor: "#0088FF" }]}>
               <MaterialIcons name="question-mark" size={18} color="#fff" />
             </View>
-            <Text style={[styles.listText, {color : colors.text}]}>F.A.Q</Text>
+            <Text style={[styles.listText, { color: colors.text }]}>F.A.Q</Text>
           </View>
           <Feather name="chevron-right" color={colors.text} size={20} />
         </Pressable>
@@ -121,13 +139,13 @@ const styles = StyleSheet.create({
   },
   sheetContainer: {
     padding: 16,
-    flexDirection : 'column',
-    gap : 12
+    flexDirection: 'column',
+    gap: 12
   },
-  selectElement : {
-    flexDirection : 'row',
-    alignItems : 'center',
-    justifyContent : 'space-between',
+  selectElement: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 8
   },
   sheetElementContainer: {

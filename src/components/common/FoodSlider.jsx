@@ -10,19 +10,18 @@ const FoodSlider = ({ title, foods, isFetching, navigation }) => {
       <View style={styles.listHeadingContainer}>
         <Text style={styles.listHeading}>{title}</Text>
       </View>
+      {isFetching && <View style={styles.loader}>
+        <ActivityIndicator size="medium" color={Colors['main-green']} />
+      </View>}
       <FlatList
         horizontal
         contentContainerStyle={styles.listContainer}
         showsHorizontalScrollIndicator={false}
         data={foods}
-        renderItem={({ item }) => <SlideCard navigation={navigation} data={item} />}
+        renderItem={({ item }) => <SlideCard navigation={navigation} data={item} />} d
         keyExtractor={(item) => item.id.toString()}
         ListEmptyComponent={
-          isFetching ? (
-            <View style={styles.loader}>
-              <ActivityIndicator size="large" color={Colors['main-green']} />
-            </View>
-          ) : (
+          !isFetching && (
             <Text style={styles.emptyText}>No recipes found.</Text>
           )
         }
@@ -45,6 +44,7 @@ const styles = StyleSheet.create({
   },
   loader: {
     flex: 1,
+    flexDirection: "row",
     justifyContent: 'center',
     alignItems: 'center',
     height: 150,
